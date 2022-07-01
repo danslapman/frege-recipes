@@ -1,0 +1,21 @@
+module hf.Hello where
+
+import hf.Ok
+
+buildReq url = do
+    builder <- RequestBuilder.new ()
+    r1 <- builder.url url
+    r1.build
+
+fetch url = do
+    client <- HttpClient.new ()
+    req <- buildReq url
+    call <- client.newCall req
+    resp <- call.execute
+    body <- resp.body
+    --resp.close
+    body.string
+
+main args = do
+    content <- fetch "http://ya.ru"
+    println content

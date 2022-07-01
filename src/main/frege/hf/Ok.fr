@@ -1,0 +1,21 @@
+module hf.Ok where
+
+data HttpClient = native okhttp3.OkHttpClient where
+    native new :: () -> STMutable s HttpClient
+    native newCall :: Mutable s HttpClient -> Mutable s Request -> STMutable s Call
+
+data Call = native okhttp3.Call where
+    native execute :: Mutable s Call -> STMutable s Response throws IOException
+
+data RequestBuilder = native okhttp3.Request.Builder where
+    native new :: () -> STMutable s RequestBuilder
+    native url :: Mutable s RequestBuilder -> String -> STMutable s RequestBuilder
+    native build :: Mutable s RequestBuilder -> STMutable s Request
+
+data Request = native okhttp3.Request
+
+data Response = native okhttp3.Response where
+    native body :: Mutable s Response -> STMutable s ResponseBody
+
+data ResponseBody = native okhttp3.ResponseBody where
+    native string :: Mutable s ResponseBody -> ST s String throws IOException
