@@ -7,14 +7,14 @@ buildReq url = do
     r1 <- builder.url url
     r1.build
 
+fetch :: String -> IO String
 fetch url = do
     client <- HttpClient.new ()
     req <- buildReq url
     call <- client.newCall req
     resp <- call.execute
     body <- resp.body
-    --resp.close
-    body.string
+    body.string <* resp.close
 
 main args = do
     content <- fetch "http://ya.ru"
