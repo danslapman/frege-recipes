@@ -1,0 +1,12 @@
+module Java.NIO where
+
+import Java.Util (List)
+
+data Charset = pure native java.nio.charset.Charset where
+    native forName java.nio.charset.Charset.forName :: String -> ST s Charset
+
+data Path = pure native java.nio.file.Path
+
+data Files = native java.nio.file.Files where
+    native readAllLines java.nio.file.Files.readAllLines :: Path -> STMutable s (List String) throws IOException
+                                                          | Path -> Charset -> STMutable s (List String) throws IOException

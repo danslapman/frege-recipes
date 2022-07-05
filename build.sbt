@@ -31,6 +31,12 @@ lazy val deque = (project in file("deque"))
     name := "deque"
   )
 
+lazy val readwrite = (project in file("read-write"))
+  .settings(defaultSettings)
+  .settings(
+    name := "read-write"
+  )
+
 lazy val root = (project in file("."))
   .aggregate(okhttp, deque)
   .settings(
