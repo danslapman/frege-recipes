@@ -4,6 +4,8 @@ ThisBuild / autoScalaLibrary := false
 
 ThisBuild / managedScalaInstance := false
 
+ThisBuild / crossPaths := false
+
 lazy val frege: ModuleID = "org.frege-lang" % "frege" % "3.25.84" from "https://github.com/Frege/frege/releases/download/3.25alpha/frege3.25.84.jar"
 
 lazy val defaultSettings = Seq(
