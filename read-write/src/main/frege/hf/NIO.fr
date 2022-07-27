@@ -5,8 +5,32 @@ import Java.Util (List)
 data Charset = pure native java.nio.charset.Charset where
     native forName java.nio.charset.Charset.forName :: String -> ST s Charset
 
+data StandardOpenOption = pure native java.nio.file.StandardOpenOption where
+    pure native read "java.nio.file.StandardOpenOption.READ" :: StandardOpenOption
+    pure native write "java.nio.file.StandardOpenOption.WRITE" :: StandardOpenOption
+    pure native append "java.nio.file.StandardOpenOption.APPEND" :: StandardOpenOption
+    pure native truncate_existing "java.nio.file.StandardOpenOption.TRUNCATE_EXISTING" :: StandardOpenOption
+    pure native create "java.nio.file.StandardOpenOption.CREATE" :: StandardOpenOption
+    pure native create_new "java.nio.file.StandardOpenOption.CREATE_NEW" :: StandardOpenOption
+    pure native delete_on_close "java.nio.file.StandardOpenOption.DELETE_ON_CLOSE" :: StandardOpenOption
+    pure native sparse "java.nio.file.StandardOpenOption.SPARSE" :: StandardOpenOption
+    pure native sync "java.nio.file.StandardOpenOption.SYNC" :: StandardOpenOption
+    pure native dsync "java.nio.file.StandardOpenOption.DSYNC" :: StandardOpenOption
+
+    pure native valueOf "java.nio.file.StandardOpenOption.valueOf" :: String -> StandardOpenOption
+
+    native values "java.nio.file.StandardOpenOption.values" :: () -> STMutable s (JArray StandardOpenOption)
+
+data OpenOption = native java.nio.file.OpenOption
+
 data Path = pure native java.nio.file.Path
+
+data Paths = pure native java.nio.file.Paths where
+    native get "java.nio.file.Paths.get" :: String -> Mutable s (JArray String) -> ST s Path
 
 data Files = native java.nio.file.Files where
     native readAllLines java.nio.file.Files.readAllLines :: Path -> STMutable s (List String) throws IOException
                                                           | Path -> Charset -> STMutable s (List String) throws IOException
+    native write "java.nio.file.Files.write" :: Path -> Iterable CharSequence -> Mutable s (JArray OpenOption) -> ST s Path throws IOException
+                                              | Path -> Mutable s (JArray Byte) -> Mutable s (JArray OpenOption) -> ST s Path throws IOException
+                                              | Path -> Iterable CharSequence -> Charset -> Mutable s (JArray OpenOption) -> ST s Path throws IOException
